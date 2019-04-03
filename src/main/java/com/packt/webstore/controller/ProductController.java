@@ -29,6 +29,8 @@ import com.packt.webstore.domain.Product;
 import com.packt.webstore.exception.NoProductsFoundUnderCategoryException;
 import com.packt.webstore.exception.ProductNotFoundException;
 import com.packt.webstore.service.ProductService;
+import com.packt.webstore.validator.ProductValidator;
+import com.packt.webstore.validator.UnitsInStockValidator;
 
 @Controller
 @RequestMapping("market")
@@ -36,6 +38,9 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private ProductValidator productValidator;
 
 	@InitBinder
 	public void initialiseBinder(WebDataBinder binder) {
@@ -49,6 +54,7 @@ public class ProductController {
 				"condition",
 				"productImage",
 				"language");
+		binder.setValidator(productValidator);
 	}
 	
 	@ExceptionHandler(ProductNotFoundException.class)
